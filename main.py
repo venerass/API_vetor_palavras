@@ -137,3 +137,20 @@ def resetar_tabela(db: Session= Depends(get_db)):
         "code": "sucesso",
         "message": "db resetada"
     }
+
+    @app.get("/home")
+def home(request: Request, db: Session= Depends(get_db)):
+    """
+    UI interativa onde pode adicionar e receber os textos, vocabulários e vetores
+    """
+    textos = db.query(Textos).all()
+    vocabularios = db.query(Vocabularios_t).all()
+    vetores = db.query(Vetores_t).all()
+
+
+    return templates.TemplateResponse("home.html", {
+        "request": request,
+        "Textos": textos,
+        "Vocabularios": vocabularios,
+        "Vetores": vetores
+    })
