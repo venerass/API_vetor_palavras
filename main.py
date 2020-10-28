@@ -1,8 +1,14 @@
+import models
 from fastapi import FastAPI, Request, Depends
+from database import SessionLocal, engine
+from sqlalchemy.orm import Session
+from models import Textos, Vocabularios_t, Vetores_t
 import voc_vec as v
 
  
 app = FastAPI()
+
+models.Base.metadata.create_all(bind=engine)
 
 voc = v.Vocabularios()
 
