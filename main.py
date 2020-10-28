@@ -114,3 +114,26 @@ def adicionar_texto(inserir_texto: Inserir, db: Session= Depends(get_db)):
         "code": "sucesso",
         "message" : "texto adicionado"
     }
+
+    @app.post("/reset")
+def resetar_tabela(db: Session= Depends(get_db)):
+    """
+    resetar db
+    """
+
+    for d in db.query(Textos).all():
+        db.delete(d)
+        db.commit()
+
+    for d in db.query(Vocabularios_t).all():
+        db.delete(d)
+        db.commit()
+    
+    for d in db.query(Vetores_t).all():
+        db.delete(d)
+        db.commit()
+
+    return {
+        "code": "sucesso",
+        "message": "db resetada"
+    }
