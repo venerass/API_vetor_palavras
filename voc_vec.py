@@ -1,17 +1,19 @@
-class Vocabularios:
+def gerador_voc_1(texto,vocabulario = []):
+    texto = texto.replace('.','').replace('-',' ').lower().split()
+    vocabulario_1 = [v for v in vocabulario]
+    [vocabulario_1.append(palavra) for palavra in texto if palavra not in vocabulario_1]
+    return vocabulario_1
 
-    vocabulario_1 = []
-    vocabulario_2 = []
-
-    def atualizar_vocabularios(self,texto):
-        texto = texto.replace('.','').replace('-',' ').lower().split()
-        [self.vocabulario_1.append(palavra) for palavra in texto if palavra not in self.vocabulario_1]
-        gram_texto = [' '.join(texto[i:i+2]) for i  in range(len(texto))][:-1]
-        [self.vocabulario_2.append(v) for v in gram_texto if v not in self.vocabulario_2]
-
+def gerador_voc_2(texto,vocabulario = []):
+    texto = texto.replace('.','').replace('-',' ').lower().split()
+    vocabulario_2 = [v for v in vocabulario]
+    gram_texto = [' '.join(texto[i:i+2]) for i  in range(len(texto))][:-1]
+    [vocabulario_2.append(v) for v in gram_texto if v not in vocabulario_2]
+    return vocabulario_2
 
 def gerador_vetor_freq_1(texto,vocabulario):
     texto = texto.replace('.','').replace('-',' ').lower().split()
+    vetor_text = []
     vetor_text = [str(texto.count(v)) for v in vocabulario]
     return vetor_text
 
