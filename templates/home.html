@@ -3,6 +3,39 @@
 {% block content %}
 
 
+<script>
+$(document).ready(function(){
+  $("#adc_texto").click(function(){
+    var novo_texto = $("#novo_texto").val();
+
+
+    console.log(novo_texto);
+    
+    $.ajax({
+      url: '/adc_texto',
+      type: 'POST',
+      contentType: 'application/json',
+      data: JSON.stringify({ "texto": novo_texto }),
+      dataType: 'json'
+    })
+    
+    location.reload()
+
+  })
+
+  $("#limpar_tabela").click(function(){
+  
+    $.ajax({
+      url: '/reset',
+      type: 'POST',
+      data: {},
+      dataType: 'json'
+    })
+
+
+  })
+});
+</script>
 
 <h2 style="text-align: center;">Insira os textos</h1>
 
@@ -15,7 +48,7 @@
 
 <button id= "adc_texto" class="ui button" >Adicionar texto</button>
 
-<button id= "limpar_tabela" class="ui button" >Limpar todos os textos</button>
+<button id= "limpar_tabela" class="ui button" >Limpar database</button>
 
 <div class="ui divider"></div>
 
@@ -25,11 +58,11 @@
         <th>Textos</th>
     </tr></thead>
     <tbody>
-    
+    {% for t in Textos %}
       <tr>
-        <td>a</td>
+        <td>{{ t.texto }}</td>
       </tr>
-    
+    {% endfor %}
     </tbody>
 </table>
 
@@ -42,11 +75,14 @@
         <th>Vocabulário</th>
     </tr></thead>
     <tbody>
-    
       <tr>
-        <td>a</td>
+        <td>1-gram</td>
+        <td>{% if Vocabularios |length > 0 %}  {{ Vocabularios[0].vocabularios }} {% endif %}</td>
       </tr>
-    
+      <tr>
+        <td>2-gram</td>
+        <td>{% if Vocabularios |length > 1 %}  {{ Vocabularios[1].vocabularios }} {% endif %}  </td>
+      </tr>
     </tbody>
 </table>
 
@@ -60,13 +96,13 @@
         <th>2-gram</th>
     </tr></thead>
     <tbody>
+      {% for v in Vetores %}
       <tr>
-        
-        <td>a</td>
-        <td>a</td>
-        <td>a</td>
-       
+        <td>{{ v.texto }}</td>
+        <td>{{ v.gram_1 }}</td>
+        <td>{{ v.gram_2 }}</td>
       </tr>
+      {% endfor %}
     </tbody>
 </table>
 
